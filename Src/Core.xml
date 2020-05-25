@@ -1,0 +1,23 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<!-- Module Loader -->
+	<Script file="Loader\DKBLootLoader.lua"/>
+
+	<!-- Modules -->
+	<Script file="DB\DKBLootDB.lua"/>
+	<Script file="GUI\DKBLootGUI.lua"/>
+	<Script file="GUI\DKBLootGUI-CustomEditBox.lua"/>
+	<Script file="GUI\DKBLootGUI-CustomFrame.lua"/>
+	<Script file="GUI\DKBLootGUI-CustomMultiLineEditBox.lua"/>
+	<Script file="GUI\DKBLootGUI-ItemElem.lua"/>
+	<Script file="GUI\DKBLootGUI-Layouts.lua"/>
+	<Script file="GUI\DKBLootGUI-ScrollingTable.lua"/>
+	<Script file="LootMaster\DKBLootLootMaster.lua"/>
+	<Script file="Tracker\DKBLootTracker.lua"/>
+	<Script file="Trade\DKBLootEventQueue.lua"/>
+	<Script file="Trade\DKBLootTradeStateMachine.lua"/>
+	<Script file="Trade\DKBLootTrade.lua"/>
+	<Script file="Util\DKBLootUtil.lua"/>
+
+	<!-- Core -->
+	<Script file="Addon\DKBLootAddon.lua"/>
+</Ui>

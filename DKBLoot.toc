@@ -1,0 +1,8 @@
+## Title: Der Kreuzende Brennzug Loot
+## Version: 0.1
+## Author: Dr. Thoben
+## Interface: 11304
+## SavedVariables: DKBLootDB
+
+embeds.xml
+Src\Core.xml
