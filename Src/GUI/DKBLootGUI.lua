@@ -387,7 +387,7 @@ local function RenderRaidParticipantsWindow(options)
   frame:AddChild(participantsTableWrapper)
 
   participantsTable:SetColumns({
-    { name = "#", width = 20 },
+    { name = "#", width = 30 },
     { name = "Spieler", percentage = 0.6, minWidth = 80 },
     { name = "Klasse", percentage = 0.4 },
     { name = "Gruppe", width = 50 },
@@ -760,7 +760,7 @@ local function RenderRaidTab(container)
   raidsColumn:AddChild(raidsTableWrapper)
 
   raidsTable:SetColumns({
-    { name = "Datum", width = 64 },
+    { name = "Datum", width = 70 },
     { name = "Raid", percentage = 1, minWidth = 80 },
   })
   raidsTable.table:EnableSelection(true)
