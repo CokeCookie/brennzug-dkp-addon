@@ -283,46 +283,47 @@ function DB:EvaluateRaidById(raidId)
   end
 
   local participants = DB:GetRaidParticipants(raidId)
-  local dkpList = {}
-  local participantsInDKPListMap = {}
+  local exportObj = {
+    raid = raid.raid,
+    participants = {},
+    loot = {},
+  }
+  local participantsSeen = {}
 
   for i, participant in pairs(participants) do
-    dkpList[i] = {
+    exportObj.participants[i] = {
       player = participant.player,
       dkp = DB:GetPlayerDKP(participant.player, raid.raid),
       group = participant.group,
-      class = participant.class,
-      items = {},
+      class = participant.classFile,
     }
-    participantsInDKPListMap[participant.player] = i
+    participantsSeen[participant.player] = true
   end
 
   for i, entry in pairs(raid.loot) do
+    local itemName = GetItemInfo(entry.itemId)
+
     if entry.givenTo then
       local player = entry.givenTo.player
       local dkp = entry.givenTo.dkp
-      local dkpListIndex = participantsInDKPListMap[player]
 
-      if dkpListIndex == nil then
-        tinsert(dkpList, {
+      if not participantsSeen[player] then
+        tinsert(exportObj.participants, {
           player = player,
-          items = {},
         })
-        participantsInDKPListMap[player] = #dkpList
-        dkpListIndex = #dkpList
       end
-
-      local itemName = GetItemInfo(entry.itemId)
-
-      tinsert(dkpList[dkpListIndex].items, {
-        itemId = entry.itemId,
-        itemName = itemName,
-        dkp = dkp,
-      })
     end
+
+    exportObj.loot[i] = {
+      itemId = entry.itemId,
+      itemName = itemName,
+      sourceGUID = entry.sourceGUID,
+      sourceName = entry.sourceName,
+      givenTo = entry.givenTo,
+    }
   end
 
-  return LibJSON.Serialize(dkpList)
+  return LibJSON.Serialize(exportObj)
 end
 
 function DB:MarkRaidAsEvaluated(raidId)
