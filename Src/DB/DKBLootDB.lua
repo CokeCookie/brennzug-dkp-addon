@@ -284,6 +284,7 @@ function DB:EvaluateRaidById(raidId)
   local participants = DB:GetRaidParticipants(raidId)
   local exportObj = {
     raid = raid.raid,
+    date = date("%d.%m.%Y", raid.timestamp),
     participants = {},
     loot = {},
   }
