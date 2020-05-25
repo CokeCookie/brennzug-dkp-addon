@@ -403,7 +403,7 @@ local function RenderRaidParticipantsWindow(options)
   end)
   controlsContainer:AddChild(addCurrentRaidButton)
 
-  addParticipantButton:SetText("Teilnehnmer hinzuf\195\188gen")
+  addParticipantButton:SetText("Teilnehmer hinzuf\195\188gen")
   addParticipantButton:SetAutoWidth(true)
   addParticipantButton:SetCallback("OnClick", function ()
     if addRaidParticipantFrame then
