@@ -868,24 +868,22 @@ local function RenderRaidTab(container)
   lootTable:SetRowHeight(30)
   lootTable.table:RegisterEvents({
     ["OnDoubleClick"] = function (rowFrame, cellFrame, data, cols, row, realrow, column, scrollingTable, ...)
-      if column == 4 or column == 5 then
-        local selectedRaidIndex = raidsTable.table:GetSelection()
-        local raid = DB:GetRaidByIndex(selectedRaidIndex)
-        local entry = DB:GetRaidLootByIndex(raid.id, realrow)
+      local selectedRaidIndex = raidsTable.table:GetSelection()
+      local raid = DB:GetRaidByIndex(selectedRaidIndex)
+      local entry = DB:GetRaidLootByIndex(raid.id, realrow)
 
-        if not entry then
-          return
-        end
-        
-        GUI:ShowAssignItemWindow(
-          raid.id,
-          entry.itemId,
-          entry.givenTo and entry.givenTo.player or nil,
-          entry.givenTo and entry.givenTo.dkp or nil,
-          realrow,
-          column
-        )
+      if not entry then
+        return
       end
+      
+      GUI:ShowAssignItemWindow(
+        raid.id,
+        entry.itemId,
+        entry.givenTo and entry.givenTo.player or nil,
+        entry.givenTo and entry.givenTo.dkp or nil,
+        realrow,
+        column
+      )
     end,
   })
   lootSubscription:OnData(function () UpdateLootTable(raidsTable.table:GetSelection()) end)
