@@ -971,7 +971,7 @@ function GUI:ShowAssignItemWindow(raidId, itemId, playerName, dkp, itemIndex, co
   playerInput:SetUserData("flex", "grow")
   playerInput:SetText(playerName)
   playerInput.editbox:SetScript("OnTabPressed", function () dkpInput:SetFocus() end)
-  playerInput.editbox:SetScript("OnEnterPressed", handleSubmit)
+  playerInput.editbox:SetScript("OnEnterPressed", function () dkpInput:SetFocus() end)
   inputContainer:AddChild(playerInput)
 
   dkpInput:SetLabel("DKP")
