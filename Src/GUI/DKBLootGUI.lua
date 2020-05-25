@@ -1029,7 +1029,7 @@ function GUI:Show(self)
 
   tab:SetLayout("Fill")
   tab:SetTabs({
-    { text = "DKP \195\156bersicht", value = TAB_1 },
+    { text = "DKP-\195\156bersicht", value = TAB_1 },
     { text = "Raids", value = TAB_2 },
   })
   tab:SetCallback("OnGroupSelected", function (container, event, group)
