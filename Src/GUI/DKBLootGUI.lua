@@ -148,7 +148,7 @@ local function RenderImportDKPWindow(options)
 end
 
 local function RenderRaidEvaluationWindow(options)
-  local frame = AceGUI:Create("CustomFrame")
+  local frame = AceGUI:Create("Frame")
   local editBox = AceGUI:Create("CustomMultiLineEditBox")
 
   frame:SetTitle("DKP-Ausertung")
@@ -156,15 +156,6 @@ local function RenderRaidEvaluationWindow(options)
   frame.frame:SetFrameStrata("HIGH")
   frame.frame:SetSize(560, 380)
   frame.frame:SetMaxResize(560, 380)
-  frame:SetCallback("OnOk", function ()
-    ShowConfirmBox(
-      "Wirklich abschlie\195\159en?",
-      "Wenn du die Auswertung abschlie\195\159t, kannst du nachtr\195\164glich nix mehr \195\164ndern.",
-      function ()
-        DB:MarkRaidAsEvaluated(options.raidId)
-      end
-    )
-  end)
   frame:SetCallback("OnCancel", function () frame:Hide() end)
   frame:SetCallback("OnClose", function (widget)
     AceGUI:Release(widget)
@@ -173,7 +164,6 @@ local function RenderRaidEvaluationWindow(options)
       options.onClose()
     end
   end)
-  frame:SetOkButtonText("Raid endg\195\188ltig abschlie\195\159en")
 
   editBox:SetLabel("JSON-Code")
   editBox:SetText(options.json)
@@ -600,7 +590,7 @@ local function RenderRaidTab(container)
 
     lootControls:ReleaseChildren()
 
-    if not raid or raid.evaluated then
+    if not raid then
       return
     end
 

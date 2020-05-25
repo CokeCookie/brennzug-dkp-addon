@@ -92,7 +92,6 @@ function DB:AddRaid(raid)
   tinsert(raids, 1, {
     id = id,
     raid = raid,
-    evaluated = false,
     loot = {},
     lootedNpcs = {},
     participants = {},
@@ -324,18 +323,6 @@ function DB:EvaluateRaidById(raidId)
   end
 
   return LibJSON.Serialize(exportObj)
-end
-
-function DB:MarkRaidAsEvaluated(raidId)
-  local raid = DB:GetRaidById(raidId)
-
-  if not raid then
-    return
-  end
-
-  raid.evaluated = true
-
-  UpdateRaids(DB:GetRaids())
 end
 
 function DB:AddRaidParticipant(raidId, info)
