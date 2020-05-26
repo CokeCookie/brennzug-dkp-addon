@@ -1036,8 +1036,6 @@ end
 
 function GUI:Show(self)
   if mainFrame then
-    mainFrame:Hide()
-    mainFrame = nil
     return
   end
 
@@ -1079,4 +1077,17 @@ function GUI:Show(self)
 
   mainFrame = frame
   mainFrameStatusTextIndex = (mainFrameStatusTextIndex % #mainFrameStatusTexts) + 1
+end
+
+function GUI:Hide()
+  if not mainFrame then
+    return
+  end
+
+  mainFrame:Hide()
+  ClosePopupFrames()
+end
+
+function GUI:IsVisible()
+  return mainFrame and mainFrame:IsVisible()
 end

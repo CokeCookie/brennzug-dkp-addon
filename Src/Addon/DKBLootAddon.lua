@@ -16,5 +16,9 @@ function DKBLoot:OnInitialize()
 end
 
 function DKBLoot:HandleSlashCommand(command)
-  GUI:Show()
+  if GUI:IsVisible() then
+    GUI:Hide()
+  else
+    GUI:Show()
+  end
 end
