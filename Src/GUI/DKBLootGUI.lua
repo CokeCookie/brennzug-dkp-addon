@@ -519,6 +519,9 @@ local function RenderDKPSummaryTab(container)
   end
 
   container.frame:RegisterEvent("GUILD_ROSTER_UPDATE")
+  container:SetCallback("OnClose", function ()
+    container.frame:UnregisterEvent("GUILD_ROSTER_UPDATE")
+  end)
   container.frame:SetScript("OnEvent", HandleEvent)
 
   innerContainer:SetLayout("Flex")
