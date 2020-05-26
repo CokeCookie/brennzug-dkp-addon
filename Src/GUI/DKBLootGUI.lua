@@ -14,6 +14,7 @@ local mainFrameStatusTexts = {
   "Dank geht raus an Cokecookie, Megumìn, Lothia, Ragnarrwall und Siedler!",
 }
 local mainFrameStatusTextIndex = 1
+local selectedTab = TAB_2
 -- Tab 1
 local importFrame = nil
 -- Tab 2
@@ -22,6 +23,7 @@ local raidParticipantsFrame = nil
 local addRaidParticipantFrame = nil
 local raidEvaluationFrame = nil
 local lootTableItemTooltip = CreateFrame("GameTooltip", "DKBLootGUI-LootTableTooltip", UIParent, "GameTooltipTemplate")
+local selectedRaid = nil
 -- Generic
 local confirmBoxFrame = nil
 
@@ -588,6 +590,8 @@ local function RenderRaidTab(container)
   local lootTable = AceGUI:Create("DKBLootGUI-ScrollingTable")
   local lootControls = AceGUI:Create("SimpleGroup")
 
+  local isFirstRaidsTableUpdate = true
+
   local function UpdateFinishOrEvaluateRaidButton(row)
     local raid = DB:GetRaidByIndex(row)
 
@@ -703,6 +707,10 @@ local function RenderRaidTab(container)
     raidsTable:SetData(tableData)
 
     if #raids > 0 then
+      if selectedRaid then
+        raidsTable.table:SetSelection(selectedRaid)
+      end
+
       if not raidsTable.table:GetSelection() then
         raidsTable.table:SetSelection(1)
       end
@@ -710,6 +718,8 @@ local function RenderRaidTab(container)
       raidsTable.table:ClearSelection()
       UpdateFinishOrEvaluateRaidButton(nil)
     end
+
+    isFirstRaidsTableUpdate = false
   end
 
   local function UpdateLootTable(row)
@@ -761,6 +771,8 @@ local function RenderRaidTab(container)
   })
   raidsTable.table:EnableSelection(true)
   raidsTable:SetSelectionHandler(function (realrow)
+    selectedRaid = realrow
+
     UpdateLootTable(realrow)
     UpdateFinishOrEvaluateRaidButton(realrow)
 
@@ -1046,6 +1058,7 @@ function GUI:Show(self)
       if raidEvaluationFrame then
         raidEvaluationFrame:Hide()
       end
+    selectedTab = group
 
       RenderDKPSummaryTab(container)
    elseif group == TAB_2 then
@@ -1056,8 +1069,7 @@ function GUI:Show(self)
       RenderRaidTab(container)
    end
   end)
-  tab:SelectTab(TAB_1)
-
+  tab:SelectTab(selectedTab)
   frame:AddChild(tab)
 
   mainFrame = frame
