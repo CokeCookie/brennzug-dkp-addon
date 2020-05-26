@@ -86,8 +86,8 @@ AceGUI:RegisterLayout("Flex", function(content, children)
   end
   
   if rowDirection then
-    safecall(content.obj.LayoutFinished, content.obj, offset, nil)
+    safecall(content.obj.LayoutFinished, content.obj, offset, content:GetHeight())
   else
-    safecall(content.obj.LayoutFinished, content.obj, nil, offset)
+    safecall(content.obj.LayoutFinished, content.obj, content:GetWidth(), offset)
   end
 end)
