@@ -2,6 +2,11 @@ local LibJSON = LibStub("LibJSON-1.0")
 local DB = DKBLootLoader:RegisterModule("DB")
 local Util = DKBLootLoader:RegisterModule("Util")
 
+local ITEM_BLACKLIST = {
+  -- Zul Gurub Bijous
+  19707, 19708, 19709, 19710, 19711, 19712, 19713, 19714, 19715,
+}
+
 DB.RAID_MC, DB.RAID_ZG, DB.RAID_BWL = "MOLTEN_CORE", "ZUL_GURUB", "BLACKWING_LAIR"
 DB.EVENT_GUILD_DKP, DB.EVENT_RAIDS, DB.EVENT_LOOT, DB.EVENT_PARTICIPANTS = "GUILD_DKP", "RAIDS", "LOOT", "PARTICIPANTS"
 local INITIAL_DKP = 10
@@ -198,6 +203,10 @@ function DB:IsLootSourceAlreadyKnown(id, guid)
 end
 
 function DB:AddLootItem(sourceGUID, sourceName, itemId)
+  if not tContains(ITEM_BLACKLIST, itemId) then
+    return
+  end
+
   local activeRaid = DB:GetActiveRaid()
 
   if not activeRaid then
