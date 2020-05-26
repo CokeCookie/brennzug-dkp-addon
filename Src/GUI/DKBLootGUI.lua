@@ -622,6 +622,9 @@ local function RenderRaidTab(container)
 
       raidParticipantsFrame = RenderRaidParticipantsWindow({
         raid = raid,
+        onClose = function ()
+          raidParticipantsFrame = nil
+        end,
       })
     end)
     participantsButton:SetAutoWidth(true)
