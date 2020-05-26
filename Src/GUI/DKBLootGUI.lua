@@ -14,7 +14,7 @@ local mainFrameStatusTexts = {
   "Dank geht raus an Cokecookie, Megumìn, Lothia, Ragnarrwall und Siedler!",
 }
 local mainFrameStatusTextIndex = 1
-local selectedTab = TAB_2
+local selectedTab = TAB_1
 -- Tab 1
 local importFrame = nil
 -- Tab 2
