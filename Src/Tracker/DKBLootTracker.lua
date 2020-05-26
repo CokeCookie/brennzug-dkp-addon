@@ -44,7 +44,7 @@ local function HandleLootOpened(...)
       local quality = C_Item.GetItemQualityByID(itemId)
 
       if tContains(ITEM_BLACKLIST, itemId) then
-        return
+        continue
       end
 
       if DEBUG or (not DEBUG and 3 <= quality and quality <= 5) then
