@@ -53,11 +53,13 @@ AceGUI:RegisterLayout("Flex", function(content, children)
       if child.type == "SimpleGroup" or child:GetUserData("flexAutoWidth") then
         child:SetHeight(height)
       end
+
       child.frame:SetPoint("LEFT", content, "LEFT", offset, 0)
     else
       if child.type == "SimpleGroup" or child:GetUserData("flexAutoWidth") then
         child:SetWidth(width)
       end
+
       child.frame:SetPoint("TOPLEFT", content, "TOPLEFT", 0, -offset)
     end
 
@@ -68,6 +70,7 @@ AceGUI:RegisterLayout("Flex", function(content, children)
         child:SetHeight(remainingSpacePerChild)
       end
     end
+
     child.frame:Show()
 
     local childSpace = rowDirection and child.frame:GetWidth() or child.frame:GetHeight()
