@@ -337,7 +337,7 @@ function DB:AddRaidParticipant(raidId, info)
 
   for i, participant in pairs(raid.participants) do
     if participant.player == info.player then
-      existingParticipant = current
+      existingParticipant = participant
       break
     end
   end
