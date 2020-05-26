@@ -1012,6 +1012,28 @@ function GUI:ShowAssignItemWindow(raidId, itemId, playerName, dkp, itemIndex, co
   return frame
 end
 
+local function ClosePopupFrames()
+  local popups = {
+    -- Tab 1    
+    importFrame,
+
+    -- Tab 2
+    addRaidFrame,
+    raidParticipantsFrame,
+    addRaidParticipantFrame,
+    raidEvaluationFrame,
+
+    -- Generic
+    confirmBoxFrame,
+  }
+
+  for i, frame in pairs(popups) do
+    if frame then
+      frame:Hide()
+    end
+  end
+end
+
 function GUI:Show(self)
   if mainFrame then
     mainFrame:Hide()
@@ -1025,6 +1047,7 @@ function GUI:Show(self)
   frame:SetTitle("Der Kreuzende Brennzug - Loot")
   frame:SetStatusText(mainFrameStatusTexts[mainFrameStatusTextIndex])
   frame:SetCallback("OnClose", function (widget)
+    ClosePopupFrames()
     AceGUI:Release(widget)
     mainFrame = nil
   end)
@@ -1041,31 +1064,13 @@ function GUI:Show(self)
   tab:SetCallback("OnGroupSelected", function (container, event, group)
    container:ReleaseChildren()
 
-    if confirmBoxFrame then
-      confirmBoxFrame:Hide()
-    end
+    ClosePopupFrames()
 
-   if group == TAB_1 then
-      if addRaidFrame then
-        addRaidFrame:Hide()
-      end
-      if raidParticipantsFrame then
-        raidParticipantsFrame:Hide()
-      end
-      if addRaidParticipantFrame then
-        addRaidParticipantFrame:Hide()
-      end
-      if raidEvaluationFrame then
-        raidEvaluationFrame:Hide()
-      end
     selectedTab = group
 
+   if group == TAB_1 then
       RenderDKPSummaryTab(container)
    elseif group == TAB_2 then
-      if importFrame then
-        importFrame:Hide()
-      end
-
       RenderRaidTab(container)
    end
   end)
