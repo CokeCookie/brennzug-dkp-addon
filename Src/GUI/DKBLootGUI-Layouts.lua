@@ -23,7 +23,7 @@ AceGUI:RegisterLayout("Flex", function(content, children)
 
   local width = content:GetWidth()
   local height = content:GetHeight()
-  local rowDirection = content.obj:GetUserData("flexDirection")
+  local rowDirection = content.obj:GetUserData("flexDirection") == "row"
   local remainingSpace = rowDirection and width or height
   local growingChildren = 0
 
