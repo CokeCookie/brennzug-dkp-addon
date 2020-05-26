@@ -52,6 +52,10 @@ local function HandleLootChatMessage(text)
   if not playerName or not itemLink then
     playerName = GetUnitName("player")
     itemLink = string.match(text, patternLootOwn)
+
+    if itemLink and lootMethod == "group" then
+      DB:AddLootItem("UNKNOWN", "N/A", Util:GetItemIdFromItemLink(itemLink))
+    end
   end
 
   if itemLink then

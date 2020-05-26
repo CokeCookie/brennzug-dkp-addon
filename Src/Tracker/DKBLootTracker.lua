@@ -10,6 +10,12 @@ local ITEM_BLACKLIST = {
 local eventFrame = CreateFrame("Frame")
 
 local function HandleLootOpened(...)
+  local lootMethod = GetLootMethod()
+
+  if lootMethod ~= "master" then
+    return
+  end
+
   local activeRaid = DB:GetActiveRaid()
 
   if not activeRaid then
