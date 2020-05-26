@@ -62,7 +62,6 @@ local methods = {
     self.table = ScrollingTable:CreateST({}, nil, nil, nil, self.frame)
     self.columns = {}
 
-    self.table.frame:SetParent(self.frame)
     self.table.head:SetHeight(15)
     self.table.frame:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, -16)
     self.table.frame:SetPoint("BOTTOMRIGHT", self.frame, "BOTTOMRIGHT", 0, 3)
