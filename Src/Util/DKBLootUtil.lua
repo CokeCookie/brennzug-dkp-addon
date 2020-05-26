@@ -25,12 +25,16 @@ function Util:TablePull(table, key)
   return value
 end
 
+function Util:RemoveServerNameFromPlayerName(playerName)
+  return playerName:match("([^-]*)-?")
+end
+
 function Util:GetGuildMemberInfo(player)
   local totalGuildMembers = GetNumGuildMembers()
 
   for i = 1, totalGuildMembers do
     local nameWithServerName, rankName, rankIndex, level, classDisplayName, zone, publicNote, officerNote, isOnline, status, class, achievementPoints, achievementRank, isMobile, canSoR, repStanding, GUID = GetGuildRosterInfo(i)
-    local name = nameWithServerName:match("(.*)-")
+    local name = Util:RemoveServerNameFromPlayerName(nameWithServerName)
 
     if name == player then
       return name, rankName, rankIndex, level, classDisplayName, zone, publicNote, officerNote, isOnline, status, class, achievementPoints, achievementRank, isMobile, canSoR, repStanding, GUID
@@ -45,7 +49,7 @@ function Util:IsInMyGuild(player)
 
   for i = 1, totalGuildMembers do
     local nameWithServerName = GetGuildRosterInfo(i)
-    local name = nameWithServerName:match("(.*)-")
+    local name = Util:RemoveServerNameFromPlayerName(nameWithServerName)
 
     if name == player then
       return true
