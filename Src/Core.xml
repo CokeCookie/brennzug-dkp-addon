@@ -17,6 +17,7 @@
 	<Script file="Trade\DKBLootTradeStateMachine.lua"/>
 	<Script file="Trade\DKBLootTrade.lua"/>
 	<Script file="Util\DKBLootUtil.lua"/>
+	<Script file="Whisper\DKBLootWhisper.lua"/>
 
 	<!-- Core -->
 	<Script file="Addon\DKBLootAddon.lua"/>

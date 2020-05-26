@@ -5,6 +5,7 @@ local GUI = DKBLootLoader:UseModule("GUI")
 local LootMaster = DKBLootLoader:UseModule("LootMaster")
 local Tracker = DKBLootLoader:UseModule("Tracker")
 local Trade = DKBLootLoader:UseModule("Trade")
+local Whisper = DKBLootLoader:UseModule("Whisper")
 
 function DKBLoot:OnInitialize()
   DKBLoot:RegisterChatCommand("dkb", "HandleSlashCommand")
@@ -13,6 +14,7 @@ function DKBLoot:OnInitialize()
   LootMaster:Initialize()
   Tracker:Initialize()
   Trade:Initialize()
+  Whisper:Initialize()
 end
 
 function DKBLoot:HandleSlashCommand(command)
