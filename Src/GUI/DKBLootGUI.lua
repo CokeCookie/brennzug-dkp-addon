@@ -27,6 +27,8 @@ local selectedRaid = nil
 -- Generic
 local confirmBoxFrame = nil
 
+local specialFramesStack = {}
+
 local classesMap = {
   {
     className = "Druide",
@@ -66,6 +68,63 @@ local classesMap = {
   },
 }
 
+local function GetSpecialFrameIndex(name)
+  for i, current in pairs(UISpecialFrames) do
+    if current == name then
+      return i
+    end
+  end
+
+  return nil
+end
+
+local function RegisterAsSpecialFrame(frame, name)
+  if not GetSpecialFrameIndex(name) then
+    _G[name] = frame
+    tinsert(UISpecialFrames, name)
+  end
+end
+
+local function UnregisterAsSpecialFrame(name)
+  local index = GetSpecialFrameIndex(name)
+
+  if index then
+    _G[name] = nil
+    tremove(UISpecialFrames, index)
+  end
+end
+
+local function PushSpecialFrame(frame, name)
+  local entry = {
+    frame = frame,
+    name = name,
+    index = #UISpecialFrames + 1,
+  }
+
+  local current = specialFramesStack[#specialFramesStack]
+
+  if current then
+    UnregisterAsSpecialFrame(current.name)
+  end
+
+  RegisterAsSpecialFrame(frame, name)
+  tinsert(specialFramesStack, entry)
+end
+
+local function PopSpecialFrame()
+  local previous = specialFramesStack[#specialFramesStack - 1]
+  local current = specialFramesStack[#specialFramesStack]
+
+  if current then
+    UnregisterAsSpecialFrame(current.name)
+    tremove(specialFramesStack, #specialFramesStack)
+  end
+
+  if previous then
+    RegisterAsSpecialFrame(previous.frame, previous.name)
+  end
+end
+
 local function CloseConfirmBox()
   if confirmBoxFrame then
     AceGUI:Release(confirmBoxFrame)
@@ -90,6 +149,7 @@ local function ShowConfirmBox(title, text, confirmHandler)
   end)
   frame:SetCallback("OnCancel", function () frame:Hide() end)
   frame:SetCallback("OnClose", function (widget)
+    PopSpecialFrame()
     AceGUI:Release(widget)
     confirmBoxFrame = nil
   end)
@@ -99,6 +159,8 @@ local function ShowConfirmBox(title, text, confirmHandler)
   frame:SetHeight(label.label:GetNumLines() + label.label:GetStringHeight() + 70)
 
   confirmBoxFrame = frame
+
+  PushSpecialFrame(frame, "DKBLoot_ConfirmFrame")
 
   return frame
 end
@@ -134,6 +196,7 @@ local function RenderImportDKPWindow(options)
   frame:SetCallback("OnOk", handleSubmit)
   frame:SetCallback("OnCancel", function() frame:Hide() end)
   frame:SetCallback("OnClose", function (widget)
+    PopSpecialFrame()
     AceGUI:Release(widget)
     
     if options.onClose then
@@ -145,6 +208,8 @@ local function RenderImportDKPWindow(options)
   editBox:SetFocus()
   editBox.editbox:SetScript("OnEnterPressed", handleSubmit)
   frame:AddChild(editBox)
+
+  PushSpecialFrame(frame, "DKBLoot_ImportDKPFrame")
 
   return frame
 end
@@ -160,6 +225,7 @@ local function RenderRaidEvaluationWindow(options)
   frame.frame:SetMaxResize(560, 380)
   frame:SetCallback("OnCancel", function () frame:Hide() end)
   frame:SetCallback("OnClose", function (widget)
+    PopSpecialFrame()
     AceGUI:Release(widget)
     
     if options.onClose then
@@ -172,6 +238,8 @@ local function RenderRaidEvaluationWindow(options)
   editBox:SetFocus()
   editBox:HighlightText(0, #options.json)
   frame:AddChild(editBox)
+
+  PushSpecialFrame(frame, "DKBLoot_RaidEvaluationFrame")
 
   return frame
 end
@@ -204,6 +272,7 @@ local function RenderAddRaidWindow(options)
   frame:SetCallback("OnOk", handleSubmit)
   frame:SetCallback("OnCancel", function() frame:Hide() end)
   frame:SetCallback("OnClose", function (widget)
+    PopSpecialFrame()
     AceGUI:Release(widget)
     
     if options.onClose then
@@ -233,6 +302,8 @@ local function RenderAddRaidWindow(options)
   if instanceIdValueMap[instanceId] then
     dropdown:SetValue(instanceIdValueMap[instanceId])
   end
+
+  PushSpecialFrame(frame, "DKBLoot_AddRaidFrame")
 
   return frame
 end
@@ -277,6 +348,7 @@ local function RenderAddRaidParticipantWindow(options)
   frame:SetCallback("OnOk", handleSubmit)
   frame:SetCallback("OnCancel", function() frame:Hide() end)
   frame:SetCallback("OnClose", function (widget)
+    PopSpecialFrame()
     AceGUI:Release(widget)
     
     if options.onClose then
@@ -304,6 +376,8 @@ local function RenderAddRaidParticipantWindow(options)
   classDropdown:SetUserData("flexAutoWidth", true)
   classDropdown:SetList(classes)
   frame:AddChild(classDropdown)
+
+  PushSpecialFrame(frame, "DKBLoot_AddRaidParticipantFrame")
 
   return frame
 end
@@ -367,6 +441,7 @@ local function RenderRaidParticipantsWindow(options)
   frame.frame:SetSize(500, 400)
   frame:SetCallback("OnClose", function (widget)
     participantsSubscription:Cancel()
+    PopSpecialFrame()
     AceGUI:Release(widget)
     
     if options.onClose then
@@ -447,6 +522,8 @@ local function RenderRaidParticipantsWindow(options)
   controlsContainer:AddChild(deleteParticipantButton)
 
   UpdateParticipatsTable()
+
+  PushSpecialFrame(frame, "DKBLoot_RaidParticipantsFrame")
 
   return frame
 end
@@ -957,6 +1034,7 @@ function GUI:ShowAssignItemWindow(raidId, itemId, playerName, dkp, itemIndex, co
   frame:SetCallback("OnOk", handleSubmit)
   frame:SetCallback("OnCancel", function() frame:Hide() end)
   frame:SetCallback("OnClose", function (widget)
+    PopSpecialFrame()
     AceGUI:Release(widget)
   end)
 
@@ -1008,6 +1086,8 @@ function GUI:ShowAssignItemWindow(raidId, itemId, playerName, dkp, itemIndex, co
       dkpInput:HighlightText(0, #dkpInput:GetText())
     end
   end
+
+  PushSpecialFrame(frame, "DKBLoot_AssignItemFrame")
 
   return frame
 end
@@ -1077,6 +1157,8 @@ function GUI:Show(self)
 
   mainFrame = frame
   mainFrameStatusTextIndex = (mainFrameStatusTextIndex % #mainFrameStatusTexts) + 1
+
+  PushSpecialFrame(frame, "DKBLoot_MainFrame")
 end
 
 function GUI:Hide()
