@@ -43,12 +43,10 @@ local function HandleLootOpened(...)
       local itemId = Util:GetItemIdFromItemLink(itemLink)
       local quality = C_Item.GetItemQualityByID(itemId)
 
-      if tContains(ITEM_BLACKLIST, itemId) then
-        continue
-      end
-
-      if DEBUG or (not DEBUG and 3 <= quality and quality <= 5) then
-        DB:AddLootItem(lootSourceGuid, lootSourceName, itemId)
+      if not tContains(ITEM_BLACKLIST, itemId) then
+        if DEBUG or (not DEBUG and 3 <= quality and quality <= 5) then
+          DB:AddLootItem(lootSourceGuid, lootSourceName, itemId)
+        end
       end
     end
   end
