@@ -69,6 +69,13 @@ AceGUI:RegisterLayout("Flex", function(content, children)
       else
         child:SetHeight(remainingSpacePerChild)
       end
+
+      -- I know what you want to say, this is pretty expensive to call PerformLayout although
+      -- it might have already been called by adjusting the width/height but sometimes the
+      -- layout wasen't updated after calling the setXYZ function so let's just be safe
+      if child.PerformLayout then
+        child:PerformLayout()
+      end
     end
 
     child.frame:Show()
