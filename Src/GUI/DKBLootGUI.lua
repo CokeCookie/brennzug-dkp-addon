@@ -708,7 +708,7 @@ local function RenderRaidTab(container)
       end
     else
       raidsTable.table:ClearSelection()
-      UpdateFinishOrEvaluateRaidButton(raidsTable.table:GetSelection())
+      UpdateFinishOrEvaluateRaidButton(nil)
     end
   end
 
