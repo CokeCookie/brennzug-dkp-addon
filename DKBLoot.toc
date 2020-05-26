@@ -1,4 +1,4 @@
-## Title: Der Kreuzende Brennzug Loot
+## Title: DKBLoot - DKP Tracking für den Brennzug
 ## Version: 0.1
 ## Author: Dr. Thoben
 ## Interface: 11304
