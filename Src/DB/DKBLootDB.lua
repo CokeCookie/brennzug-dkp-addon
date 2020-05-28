@@ -203,7 +203,7 @@ function DB:IsLootSourceAlreadyKnown(id, guid)
 end
 
 function DB:AddLootItem(sourceGUID, sourceName, itemId)
-  if not tContains(ITEM_BLACKLIST, itemId) then
+  if tContains(ITEM_BLACKLIST, itemId) then
     return
   end
 
