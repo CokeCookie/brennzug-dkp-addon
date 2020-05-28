@@ -64,7 +64,7 @@ function Util:GetRaidName(raid)
 end
 
 function Util:GetItemIdFromItemLink(itemLink)
-  return itemLink:match("|[0123456789abcdef]*|Hitem:(%d+):")
+  return tonumber(itemLink:match("|[0123456789abcdef]*|Hitem:(%d+):"))
 end
 
 function Util:IsEmpty(value)
