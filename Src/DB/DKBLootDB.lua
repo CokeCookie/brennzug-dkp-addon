@@ -215,6 +215,12 @@ function DB:AddLootItem(sourceGUID, sourceName, itemId)
     return
   end
 
+  local quality = C_Item.GetItemQualityByID(itemId)
+
+  if quality < 3 then
+    return
+  end
+
   local activeRaid = DB:GetActiveRaid()
 
   if not activeRaid then

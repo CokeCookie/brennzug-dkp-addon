@@ -42,11 +42,8 @@ local function HandleLootOpened(...)
     if GetLootSlotType(slot) == LOOT_SLOT_ITEM then
       local itemLink = GetLootSlotLink(slot)
       local itemId = Util:GetItemIdFromItemLink(itemLink)
-      local quality = C_Item.GetItemQualityByID(itemId)
 
-      if 3 <= quality and quality <= 5 then
-        DB:AddLootItem(lootSourceGuid, lootSourceName, itemId)
-      end
+      DB:AddLootItem(lootSourceGuid, lootSourceName, itemId)
     end
   end
 end
