@@ -37,10 +37,6 @@ local function HandleLootChatMessage(text)
     return
   end
 
-  if not IsMasterLooter() then
-    return
-  end
-
   local activeRaid = DB:GetActiveRaid()
 
   if not activeRaid then
