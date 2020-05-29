@@ -5,6 +5,14 @@ local Util = DKBLootLoader:RegisterModule("Util")
 local ITEM_BLACKLIST = {
   -- Zul Gurub Bijous
   19707, 19708, 19709, 19710, 19711, 19712, 19713, 19714, 19715,
+  -- Enchanting materials: Small Brilliant Shard, Large Brilliant Shard, Nexus Crystal
+  14343, 14344, 20725,
+  -- Onyxia materials: Scale of Onyxia
+  15410,
+  -- Molten Core materials: Fiery Core, Lava Core
+  17010, 17011,
+  -- Blackwing Lair materials: Elementium Ore
+  18562
 }
 
 DB.RAID_MC, DB.RAID_ZG, DB.RAID_BWL = "MOLTEN_CORE", "ZUL_GURUB", "BLACKWING_LAIR"
