@@ -48,10 +48,6 @@ local function HandleLootChatMessage(text)
   if not playerName or not itemLink then
     playerName = GetUnitName("player")
     itemLink = string.match(text, patternLootOwn)
-
-    if itemLink and lootMethod == "group" then
-      DB:AddLootItem("UNKNOWN", "N/A", Util:GetItemIdFromItemLink(itemLink))
-    end
   end
 
   if itemLink then
@@ -68,13 +64,24 @@ local function HandleLootChatMessage(text)
   end
 end
 
+local function HandleLootRollWon(itemLink)
+  local lootMethod = GetLootMethod()
+
+  if lootMethod == "group" then
+    DB:AddLootItem("UNKNOWN", "N/A", Util:GetItemIdFromItemLink(itemLink))
+  end
+end
+
 local function HandleEvent(self, event, ...)
   if event == "CHAT_MSG_LOOT" then
     HandleLootChatMessage(...)
+  elseif event == "LOOT_ITEM_ROLL_WON" then
+    HandleLootRollWon(...)
   end
 end
 
 function LootMaster:Initialize()
   eventFrame:RegisterEvent("CHAT_MSG_LOOT")
+  eventFrame:RegisterEvent("LOOT_ITEM_ROLL_WON")
   eventFrame:SetScript("OnEvent", HandleEvent)
 end
