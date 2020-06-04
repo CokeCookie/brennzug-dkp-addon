@@ -218,7 +218,7 @@ local function RenderRaidEvaluationWindow(options)
   local frame = AceGUI:Create("Frame")
   local editBox = AceGUI:Create("CustomMultiLineEditBox")
 
-  frame:SetTitle("DKP-Ausertung")
+  frame:SetTitle("DKP-Auswertung")
   frame:SetLayout("Fill")
   frame.frame:SetFrameStrata("HIGH")
   frame.frame:SetSize(560, 380)
